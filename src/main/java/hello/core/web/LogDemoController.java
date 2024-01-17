@@ -14,15 +14,17 @@ import javax.servlet.http.HttpServletRequest;
 public class LogDemoController {
 
     private final LogDemoService logDemoService;
-    // mylogger이 주입되는 게 아니라, mylogger 찾을 수 있는 dependency lookup할 수 있는 것이 주입됨.
-    private final ObjectProvider<MyLogger> myLoggerProvider;
+
+    private final MyLogger myLogger;
 
     @RequestMapping("log-demo")
     @ResponseBody
     public String logDemo(HttpServletRequest request) {
 
         String requestURL = request.getRequestURL().toString();
-        MyLogger myLogger = myLoggerProvider.getObject();
+
+        System.out.println("myLogger = " + myLogger.getClass());
+
         myLogger.setRequestURL(requestURL);
 
         myLogger.log("controller test");
